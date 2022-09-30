@@ -2,11 +2,5 @@
 sudo apt update
 sudo apt -y upgrade
 
-# Install Python3
-sudo apt -y install python3
-
-# Install PAM modules
-sudo apt -y install libpam-cracklib
-
-# Install firewall
-sudo apt -y install ufw gufw
+# Install all these packages, whether it be for points, or for more efficient patching
+sudo apt -y install python3 libpam-cracklib ufw gufw aptitude
