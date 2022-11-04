@@ -2,7 +2,7 @@
 #  Change passwords  #
 ######################
 
-import pwd, os, sys, subprocess
+import pwd, os, sys
 
 print("New password:")
 NPWD = input()

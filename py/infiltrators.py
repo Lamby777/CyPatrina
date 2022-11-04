@@ -3,7 +3,7 @@
 #                  Coded by DexieTheSheep                    #
 ##############################################################
 
-import pwd, grp, sys, subprocess
+import pwd, sys, subprocess
 
 def getgroups(user):
 	out = subprocess.getoutput("groups " + str(user))
@@ -12,18 +12,15 @@ def getgroups(user):
 if len(sys.argv) == 1:
 	raise AssertionError("No arguments given!")
 
-if sys.argv[1] == "list":
-	for user in pwd.getpwall():
-		userid = user[2]
-		if userid >= 1000 and userid != 65534:
-			groups = getgroups(user[0])
-			print("User %s with ID %s in groups %s" % (user[0], userid, groups))
-elif sys.argv[1] == "listsudo":
-	for user in pwd.getpwall():
-		userid = user[2]
-		if userid >= 1000 and userid != 65534:
-			groups = getgroups(user[0])
+if not sys.argv[1] in ["list", "listsudo"]:
+	raise AssertionError("Invalid arguments given!")
+
+for user in pwd.getpwall():
+	userid = user[2]
+	if userid >= 1000 and userid != 65534:
+		groups = getgroups(user[0])
+		if sys.argv[1] == "list":
+			print("User %s with ID %s\nGroups %s\n\n" % (user[0], userid, groups))
+		elif sys.argv[1] == "listsudo":
 			if "sudo" in groups:
 				print("User %s (%s) has admin rights!" % (user[0], userid))
-else:
-	raise AssertionError("Invalid arguments given!")
